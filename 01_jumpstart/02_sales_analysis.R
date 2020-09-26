@@ -109,21 +109,61 @@ sales_by_year_tbl %>%
         # Geometries
         geom_col(fill = "#2C3E50") +
         geom_label(aes(label = sales_text)) +
-        geom_smooth(method = "lm", se = FALSE)
+        geom_smooth(method = "lm", se = FALSE) +
+        
+    
+        # Formatting using theme_tq()
+        theme_tq() +
+        scale_y_continuous(labels = scales::dollar) +
+        labs(
+            title = "Revenue by Year",
+            subtitle = "Upward Trend",
+            x = "Year",
+            y = "Revenue"
+        )
 
 # 6.2 Sales by Year and Category 2 ----
 
 
 # Step 1 - Manipulate
 
+sales_by_year_cat_2_tbl <- bike_orderlines_wrangled_tbl %>%
+    
+    select(order_date, total_price, category_2) %>%
+    mutate(year = year(order_date))  %>%
+    
+    group_by(year, category_2) %>%
+    summarise(sales = sum(total_price)) %>%
+    ungroup()  %>%
 
-
+    mutate(sales_text = scales::dollar(sales))
 
 # Step 2 - Visualize
 
+sales_by_year_cat_2_tbl %>%
+   
+    #Set up x and y as well as fill
+     ggplot(aes(x = year, y = sales, fill = category_2)) +
+    
+    # Geometries
+    geom_col() +
+    geom_smooth(method = "lm", se = FALSE) +
+    #Facet
+    facet_wrap(~ category_2, ncol =  3, scales = "free_y")  +
 
 
-
+    #Formatting
+    theme_tq() +
+    scale_fill_tq()  +
+    scale_y_continuous(labels = scales::dollar)  +
+    
+    labs(
+        title = "Revenue by Year and Category 2",
+        subtitle = "Each product category has an upward trend",
+        x = "",
+        y = "Revenue",
+        fill = "Product Secondary Category"
+    )
 # 7.0 Writing Files ----
 
 
