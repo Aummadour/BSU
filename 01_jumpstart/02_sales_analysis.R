@@ -165,12 +165,22 @@ sales_by_year_cat_2_tbl %>%
         fill = "Product Secondary Category"
     )
 # 7.0 Writing Files ----
-
+fs::dir_create("00_data/bike_sales/data_wrangled_student")
 
 # 7.1 Excel ----
 
-
+bike_orderlines_wrangled_tbl  %>%
+    write_xlsx("00_data/bike_sales/data_wrangled_student/bike_orderlines.xlsx")
 # 7.2 CSV ----
 
-
+bike_orderlines_wrangled_tbl  %>%
+    write_csv("00_data/bike_sales/data_wrangled_student/bike_orderlines.csv")
 # 7.3 RDS ----
+
+bike_orderlines_wrangled_tbl  %>%
+    write_rds("00_data/bike_sales/data_wrangled_student/bike_orderlines.rds")
+
+
+
+
+
